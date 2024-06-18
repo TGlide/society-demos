@@ -19,13 +19,11 @@ export class Local<T> {
 		});
 
 		if (!local) return;
-		setTimeout(() => {
-			try {
-				this.current = JSON.parse(local);
-			} catch {
-				console.error("Could not parse local storage", key, local);
-			}
-		});
+		try {
+			this.current = JSON.parse(local);
+		} catch {
+			console.error("Could not parse local storage", key, local);
+		}
 	}
 
 	dispose() {
