@@ -10,7 +10,7 @@ class Conta {
 	total = $derived(this.gastos.reduce((a, b) => a + b.value, 0));
 
 	get gastos() {
-		console.log('Reding #gastos current', this.#gastos.current)
+		console.log('Reading #gastos current', this.#gastos.current)
 		return this.#gastos.current
 	}
 

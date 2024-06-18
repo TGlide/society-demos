@@ -1,7 +1,7 @@
 import { browser } from "$app/environment";
 
 export class Local<T> {
-	current = $state<T>();
+	current = $state<T>() as T;
 	#dispose: () => void = () => {};
 
 	constructor(key: string, defaultValue: T) {
@@ -11,15 +11,17 @@ export class Local<T> {
 		const local = localStorage.getItem(key);
 
 		this.#dispose = $effect.root(() => {
+			$inspect(this.current);
 			$effect.pre(() => {
+				console.log("Setting local storage", key, this.current);
 				localStorage.setItem(key, JSON.stringify(this.current));
 			});
 		});
 
-		new Promise((resolve) => setTimeout(resolve, 1)).then(() => {
-			if (!local) return;
+		if (!local) return;
+		setTimeout(() => {
 			try {
-				return (this.current = JSON.parse(local));
+				this.current = JSON.parse(local);
 			} catch {
 				console.error("Could not parse local storage", key, local);
 			}
