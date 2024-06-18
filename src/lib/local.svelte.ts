@@ -1,33 +1,32 @@
 import { browser } from "$app/environment";
 
 export class Local<T> {
-	#current = $state<T>();
-	#key: string;
-	#defaultValue: T;
+	current = $state<T>();
+	#dispose: () => void = () => {};
 
 	constructor(key: string, defaultValue: T) {
-		this.#key = key;
-		this.#defaultValue = defaultValue;
-		this.#current = defaultValue;
+		this.current = defaultValue;
 		if (!browser) return;
+
 		const local = localStorage.getItem(key);
-		if (!local) return;
+
+		this.#dispose = $effect.root(() => {
+			$effect.pre(() => {
+				localStorage.setItem(key, JSON.stringify(this.current));
+			});
+		});
 
 		new Promise((resolve) => setTimeout(resolve, 1)).then(() => {
+			if (!local) return;
 			try {
-				return (this.#current = JSON.parse(local));
+				return (this.current = JSON.parse(local));
 			} catch {
 				console.error("Could not parse local storage", key, local);
 			}
 		});
 	}
 
-	get current() {
-		return this.#current ?? this.#defaultValue;
-	}
-
-	set current(value: T) {
-		this.#current = value;
-		localStorage.setItem(this.#key, JSON.stringify(value));
+	dispose() {
+		this.#dispose();
 	}
 }
