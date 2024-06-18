@@ -13,7 +13,6 @@ export class Local<T> {
 		this.#dispose = $effect.root(() => {
 			$inspect(this.current);
 			$effect.pre(() => {
-				console.log("Setting local storage", key, this.current);
 				localStorage.setItem(key, JSON.stringify(this.current));
 			});
 		});
