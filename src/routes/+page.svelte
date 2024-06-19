@@ -5,12 +5,10 @@
 
 <div class="mx-auto flex h-screen w-[600px] flex-col p-8">
 	<h1 class="text-4xl font-bold">Olá Thomas!</h1>
-	<p class="flex items-center mt-2">
+	<p class="flex items-center mt-2 text-xl">
 		O total de gastos atual é de
-		<span class="inline-flex items-center pl-1"><CurrencyEur size={24} weight="bold" /> {conta.total.toFixed(2)}</span>
+		<span class="inline-flex items-center pl-1"><CurrencyEur  weight="bold" /> {conta.total.toFixed(2)}</span>
 	</p>
-
-	<p>Problema: nao posso usar o array.push</p>
 
 	<a href="/conta" class="mt-4 flex gap-2 underline hover:opacity-50">
 		Gastos
