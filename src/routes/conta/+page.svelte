@@ -33,7 +33,7 @@
 			<h2 class="total-title">Total</h2>
 			<p class="total-amount gelatine">
 				<CurrencyEur size={40} weight="fill" />
-				<span>0.00</span>
+				<span>10.00</span>
 			</p>
 		</div>
 	</div>
