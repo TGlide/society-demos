@@ -14,12 +14,6 @@
 		conta.gastos.push({ value, id: Date.now() });
 		value = undefined;
 	}
-
-	$effect(() => {
-		if (conta.total >= 5000) {
-			console.log("aaaaaaaaaaaaaaaaaa");
-		}
-	});
 </script>
 
 <div class="mx-auto flex h-screen w-[600px] flex-col p-8">
