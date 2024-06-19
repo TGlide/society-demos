@@ -2,28 +2,19 @@
 	import { CurrencyEur, ArrowBendDownLeft, X } from "phosphor-svelte";
 	import { flip } from "svelte/animate";
 	import { fade } from "svelte/transition";
+	import { conta } from "$lib/conta.svelte";
 
 	let value = $state<number>();
-	$inspect({ value });
-
-	type Gasto = {
-		amount: number;
-		createdAt: Date;
-	};
-	let gastos = $state<Gasto[]>([]);
-	$inspect({ gastos });
 
 	function onsubmit(e: SubmitEvent) {
 		if (!value) return;
 		e.preventDefault();
-		gastos.push({
+		conta.gastos.push({
 			amount: value,
 			createdAt: new Date(),
 		});
 		value = undefined;
 	}
-
-	const total = $derived(gastos.reduce((acc, gasto) => acc + gasto.amount, 0));
 </script>
 
 <div class="container">
@@ -44,11 +35,11 @@
 
 	<div class="content">
 		<ul>
-			{#each gastos as gasto, i (gasto.createdAt)}
+			{#each conta.gastos as gasto, i (gasto.createdAt)}
 				<li transition:fade={{ duration: 200 }} animate:flip={{ duration: 500 }}>
 					<CurrencyEur size={24} weight="bold" />
 					<span>{gasto.amount.toFixed(2)}</span>
-					<button onclick={() => gastos.splice(i, 1)}>
+					<button onclick={() => conta.gastos.splice(i, 1)}>
 						<X size={18} weight="bold" />
 					</button>
 				</li>
@@ -57,10 +48,10 @@
 
 		<div class="total">
 			<h2 class="total-title">Total</h2>
-			{#key total}
+			{#key conta.total}
 				<p class="total-amount gelatine">
 					<CurrencyEur size={40} weight="fill" />
-					<span>{total.toFixed(2)}</span>
+					<span>{conta.total.toFixed(2)}</span>
 				</p>
 			{/key}
 		</div>
