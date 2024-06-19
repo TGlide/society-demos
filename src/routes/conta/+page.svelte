@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CurrencyEur, ArrowBendDownLeft, X, House, HouseLine } from "phosphor-svelte";
+	import { CurrencyEur, ArrowBendDownLeft, X } from "phosphor-svelte";
 	import { flip } from "svelte/animate";
 	import { fade } from "svelte/transition";
 	import { conta } from "$lib/conta.svelte";
@@ -19,9 +19,7 @@
 <div class="mx-auto flex h-screen w-[600px] flex-col p-8">
 	<div class="flex items-baseline justify-between">
 		<h1 class="text-4xl font-bold">Gastos</h1>
-		<a href="/" class="flex gap-1 items-center text-lg underline hover:opacity-75">
-			Home
-		</a>
+		<a href="/" class="flex items-center gap-1 text-lg underline hover:opacity-75"> Home </a>
 	</div>
 
 	<form
