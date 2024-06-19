@@ -82,6 +82,10 @@
 		overflow: hidden;
 	}
 
+	form:focus-within {
+		outline: 2px solid hsla(24.782, 96.064%, 70.606%);
+	}
+
 	.icon-container {
 		border-right: 2px solid black;
 		background-color: #FEE3D0;
