@@ -1,5 +1,29 @@
 <script lang="ts">
 	import { CurrencyEur, ArrowBendDownLeft, X } from "phosphor-svelte";
+	import { flip } from "svelte/animate";
+	import { fade } from "svelte/transition";
+
+	let value = $state<number>();
+	$inspect({ value });
+
+	type Gasto = {
+		amount: number;
+		createdAt: Date;
+	};
+	let gastos = $state<Gasto[]>([]);
+	$inspect({ gastos });
+
+	function onsubmit(e: SubmitEvent) {
+		if (!value) return;
+		e.preventDefault();
+		gastos.push({
+			amount: value,
+			createdAt: new Date(),
+		});
+		value = undefined;
+	}
+
+	const total = $derived(gastos.reduce((acc, gasto) => acc + gasto.amount, 0));
 </script>
 
 <div class="container">
@@ -8,11 +32,11 @@
 		<a href="/">Home</a>
 	</div>
 
-	<form>
+	<form {onsubmit}>
 		<div class="icon-container">
 			<CurrencyEur size={24} weight="bold" />
 		</div>
-		<input type="number" placeholder="0.00" />
+		<input type="number" placeholder="0.00" step="0.01" bind:value />
 		<button class="submit-button">
 			<ArrowBendDownLeft size={18} weight="bold" />
 		</button>
@@ -20,21 +44,25 @@
 
 	<div class="content">
 		<ul>
-			<li>
-				<CurrencyEur size={24} weight="bold" />
-				<span>10.00</span>
-				<button >
-					<X size={18} weight="bold" />
-				</button>
-			</li>
+			{#each gastos as gasto, i (gasto.createdAt)}
+				<li transition:fade={{ duration: 200 }} animate:flip={{ duration: 500 }}>
+					<CurrencyEur size={24} weight="bold" />
+					<span>{gasto.amount.toFixed(2)}</span>
+					<button onclick={() => gastos.splice(i, 1)}>
+						<X size={18} weight="bold" />
+					</button>
+				</li>
+			{/each}
 		</ul>
 
 		<div class="total">
 			<h2 class="total-title">Total</h2>
-			<p class="total-amount gelatine">
-				<CurrencyEur size={40} weight="fill" />
-				<span>10.00</span>
-			</p>
+			{#key total}
+				<p class="total-amount gelatine">
+					<CurrencyEur size={40} weight="fill" />
+					<span>{total.toFixed(2)}</span>
+				</p>
+			{/key}
 		</div>
 	</div>
 </div>
@@ -88,7 +116,7 @@
 
 	.icon-container {
 		border-right: 2px solid black;
-		background-color: #FEE3D0;
+		background-color: #fee3d0;
 		padding: 0.75rem;
 	}
 
