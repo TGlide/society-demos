@@ -24,7 +24,6 @@
 				<CurrencyEur size={24} weight="bold" />
 				<span>10.00</span>
 				<button>
-					conta.gastos.splice(idx, 1)}>
 					<X size={18} weight="bold" />
 				</button>
 			</li>
