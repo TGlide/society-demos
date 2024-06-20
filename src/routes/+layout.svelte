@@ -11,6 +11,10 @@
 	import '@fontsource/inter/900.css';
 </script>
 
+<svelte:head>
+	<title>Society DEMO</title>
+</svelte:head>
+
 <slot></slot>
 
 <style></style>
